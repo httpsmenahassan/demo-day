@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 // define the schema for our food model
 const foodSchema = mongoose.Schema({
     name: String,
+    quantity: Number,
 });
 
 // create the model for users and expose it to our app
