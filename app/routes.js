@@ -1,6 +1,6 @@
 const FoodModel = require('./models/food.js');
 
-module.exports = function(app, passport, db, multer) {
+module.exports = function(app, passport, db, multer, ObjectID) {
 
   // Create (post) - upload a photo -- which will result in a food in the collection, when we upload a photo a food is created
   // Create (post) - add items to pantry
@@ -17,17 +17,17 @@ module.exports = function(app, passport, db, multer) {
 
     // show the home page (will also have our login links)
     app.get('/', function(req, res) {
-        // res.render('index.ejs');
-        res.sendFile(__dirname + '/../views/index.html')
+        res.render('index.ejs');
+        // res.sendFile(__dirname + '/../views/index.html')
     });
 
     // PROFILE SECTION =========================
     app.get('/profile', isLoggedIn, function(req, res) {
-        db.collection('fridge').find().toArray((err, result) => {
+        db.collection('foods').find().toArray((err, result) => {
           if (err) return console.log(err)
           res.render('profile.ejs', {
             user : req.user,
-            messages: result
+            foods: result
           })
         })
     });
@@ -52,30 +52,23 @@ module.exports = function(app, passport, db, multer) {
 // await SomeModel.create({ name: "also_awesome" });
 
     app.post('/food', (req, res) => {
-      FoodModel.create({name: req.body.name}, (err, result) => {
+      FoodModel.create({name: req.body.name, quantity: 0}, (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
         res.redirect('/profile')
       })
     })
 
-    app.put('/messages', (req, res) => {
-      db.collection('fridge')
-      .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-        $set: {
-          thumbUp:req.body.thumbUp + 1
-        }
-      }, {
-        sort: {_id: -1},
-        upsert: true
-      }, (err, result) => {
-        if (err) return res.send(err)
-        res.send(result)
+    app.put('/food', async (req, res) => {
+      const food = await FoodModel.findById(ObjectID(req.body.foodId))
+      food.quantity += req.body.upArrow ? 1 : -1
+      food.save()
+        res.send(food)
       })
-    })
 
-    app.delete('/messages', (req, res) => {
-      db.collection('fridge').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
+      // check to see if Mongoose uses a different delete
+    app.delete('/food', (req, res) => {
+      db.collection('foods').findOneAndDelete({_id: ObjectID(req.body.foodId)}, (err, result) => {
         if (err) return res.send(500, err)
         res.send('Message deleted!')
       })
