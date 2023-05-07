@@ -40,7 +40,7 @@ module.exports = function(app, passport, db, multer, ObjectID) {
         res.redirect('/');
     });
 
-// message board routes ===============================================================
+// food log routes ===============================================================
 
 
 // // Create an instance of model SomeModel
