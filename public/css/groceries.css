@@ -1,0 +1,14 @@
+table input{
+    background: transparent;
+    border: none
+}
+
+table, tr, th, td {
+    border: 1px solid black
+}
+
+.uploadedGroceryHaulImage {
+    height: 300px;
+    display: block;
+    margin: auto;
+}

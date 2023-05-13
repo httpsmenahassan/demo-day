@@ -59,9 +59,10 @@
 
                 <h2>Add a food</h2>
                 <% if (user.local.email) { %>
-                    <form action="/food" method="POST">
-                        <input type="text" placeholder="add items to your pantry" name="name">
-                        <button type="submit">Submit</button>
+                    <form action="/food" method="POST" enctype="multipart/form-data">
+                        <input class="manualFoodAdd" type="text" placeholder="add items to your pantry" name="name">
+                        <input type="file" class="imgInput" name="groceries">
+                        <button class="foodAddSubmit" type="submit">Submit</button>
                     </form>
             </div>
         </div>
@@ -70,7 +71,8 @@
     </div>
 
     <script src="https://kit.fontawesome.com/e9f7511864.js" crossorigin="anonymous"></script>
-    <script src="/js/main.js"></script>
+    <script src="/js/groceries.js"></script>
+    <!-- <script src="/js/main.js"></script> -->
     <script src="/js/main-CRUD.js"></script>
     
 

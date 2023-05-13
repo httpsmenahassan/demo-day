@@ -1,0 +1,246 @@
+<html>
+
+<body>
+    <img src="./produce.jpg" />
+
+    <script>// Example JSON data
+    // wait until page loads before processing the image
+        window.addEventListener('load', () => {
+
+            const jsonData = {
+  "objects": [
+    {
+      "rectangle": {
+        "x": 788,
+        "y": 191,
+        "w": 201,
+        "h": 225
+      },
+      "object": "Broccoli",
+      "confidence": 0.647,
+      "parent": {
+        "object": "Vegetable",
+        "confidence": 0.661,
+        "parent": {
+          "object": "Food",
+          "confidence": 0.663
+        }
+      }
+    },
+    {
+      "rectangle": {
+        "x": 767,
+        "y": 393,
+        "w": 186,
+        "h": 237
+      },
+      "object": "Broccoli",
+      "confidence": 0.593,
+      "parent": {
+        "object": "Vegetable",
+        "confidence": 0.615,
+        "parent": {
+          "object": "Food",
+          "confidence": 0.615
+        }
+      }
+    },
+    {
+      "rectangle": {
+        "x": 793,
+        "y": 645,
+        "w": 165,
+        "h": 192
+      },
+      "object": "Broccoli",
+      "confidence": 0.549,
+      "parent": {
+        "object": "Vegetable",
+        "confidence": 0.575,
+        "parent": {
+          "object": "Food",
+          "confidence": 0.576
+        }
+      }
+    },
+    {
+      "rectangle": {
+        "x": 1096,
+        "y": 127,
+        "w": 253,
+        "h": 255
+      },
+      "object": "Apple",
+      "confidence": 0.578,
+      "parent": {
+        "object": "Fruit",
+        "confidence": 0.615,
+        "parent": {
+          "object": "Food",
+          "confidence": 0.655
+        }
+      }
+    },
+    {
+      "rectangle": {
+        "x": 1323,
+        "y": 244,
+        "w": 286,
+        "h": 320
+      },
+      "object": "Banana",
+      "confidence": 0.609,
+      "parent": {
+        "object": "Fruit",
+        "confidence": 0.689,
+        "parent": {
+          "object": "Food",
+          "confidence": 0.704
+        }
+      }
+    },
+    {
+      "rectangle": {
+        "x": 1321,
+        "y": 197,
+        "w": 420,
+        "h": 607
+      },
+      "object": "Banana",
+      "confidence": 0.656,
+      "parent": {
+        "object": "Fruit",
+        "confidence": 0.684,
+        "parent": {
+          "object": "Food",
+          "confidence": 0.702
+        }
+      }
+    },
+    {
+      "rectangle": {
+        "x": 591,
+        "y": 159,
+        "w": 218,
+        "h": 846
+      },
+      "object": "Vegetable",
+      "confidence": 0.569,
+      "parent": {
+        "object": "Food",
+        "confidence": 0.573
+      }
+    },
+    {
+      "rectangle": {
+        "x": 1347,
+        "y": 488,
+        "w": 227,
+        "h": 311
+      },
+      "object": "Fruit",
+      "confidence": 0.724,
+      "parent": {
+        "object": "Food",
+        "confidence": 0.742
+      }
+    },
+    {
+      "rectangle": {
+        "x": 333,
+        "y": 409,
+        "w": 157,
+        "h": 618
+      },
+      "object": "Cucumber",
+      "confidence": 0.52,
+      "parent": {
+        "object": "Vegetable",
+        "confidence": 0.641,
+        "parent": {
+          "object": "Food",
+          "confidence": 0.643
+        }
+      }
+    },
+    {
+      "rectangle": {
+        "x": 409,
+        "y": 469,
+        "w": 192,
+        "h": 573
+      },
+      "object": "Vegetable",
+      "confidence": 0.539,
+      "parent": {
+        "object": "Food",
+        "confidence": 0.545
+      }
+    },
+    {
+      "rectangle": {
+        "x": 1135,
+        "y": 403,
+        "w": 220,
+        "h": 659
+      },
+      "object": "Food",
+      "confidence": 0.609
+    }
+  ],
+  "requestId": "06ecd68d-3a31-4048-bcc2-1bee47e38583",
+  "metadata": {
+    "height": 1213,
+    "width": 1820,
+    "format": "Jpeg"
+  },
+  "modelVersion": "2021-04-01"
+}
+
+            // Get the <img> tag
+            const img = document.querySelector('img');
+
+            // Create a canvas element and set its width and height to match the image
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            // Draw the image on the canvas
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+
+            // Loop through the objects in the JSON and draw the rectangles and labels on the canvas
+            for (const obj of jsonData.objects) {
+                console.log(obj);
+                // Set the stroke style and line width
+                ctx.strokeStyle = 'red';
+                ctx.lineWidth = 2;
+
+                // Draw the rectangle on each item recognized by Azure
+                const rect = obj.rectangle;
+                console.log(rect)
+                ctx.strokeRect(rect.x, rect.y, rect.w, rect.h);
+
+                // Draw the label
+                const label = obj.object;
+                ctx.fillStyle = 'red';
+                ctx.font = 'bold 18px sans-serif';
+                ctx.fillText(label, rect.x, rect.y - 5);
+            }
+
+            // Replace the <img> tag with the canvas element -- takes image,processes it into canvas, when done deletes image and places canvas in its place
+            img.parentNode.replaceChild(canvas, img);
+        })
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+

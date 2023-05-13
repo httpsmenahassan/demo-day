@@ -21,23 +21,15 @@ const ObjectID = require('mongodb').ObjectID
 
 let db
 
+//Use .env file in config folder
+require("dotenv").config({ path: "./config/.env" });
+
 // configuration ===============================================================
 mongoose.connect(configDB.url, (err, database) => {
   if (err) return console.log(err)
   db = database
   require('./app/routes.js')(app, passport, db, multer, ObjectID);
 }); // connect to our database
-
-// #9 of medium article
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, './uploads')
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname)
-//   }
-// })
-// const upload = multer({ storage: storage })
 
 require('./config/passport')(passport); // pass passport for configuration
 

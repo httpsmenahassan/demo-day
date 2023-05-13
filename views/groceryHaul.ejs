@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/groceries.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <img class="uploadedGroceryHaulImage" src="uploads/<%= fileName %>">
+        <h2>AI-Detected Foods:</h2>
+        <% if (errorMsg) { %>
+            <span>
+                <%= errorMsg %>
+                <a href="/profile">Try again!</a>
+            </span>
+            <% } else { %>
+        <form action="/groceryHaul" method="POST">
+            <input type="hidden" name="fileName" value="<%= fileName %>">
+                    <table>
+                    <tr>
+                        <th>Food</th>
+                        <th>Today's Date</th>
+                        <th>Quantity</th>
+                        <th>Expiration Date</th>
+                        <th>Delete Item</th>
+                    </tr>
+                    <% const today=new Date();
+                
+                    const expirationDate=new Date();
+                        expirationDate.setTime(expirationDate.getTime() + 1000 * 60 * 60 * 24 * 4);
+                        const formattedExpirationDate=expirationDate.toLocaleDateString('en-US', { month: '2-digit' ,
+                        day: '2-digit' , year: 'numeric' });
+                        const formattedDate=today.toLocaleDateString('en-US', {
+                        month: '2-digit' , day: '2-digit' , year: 'numeric' }); %>
+                        <% for(let i=0; i < detectedFoods.length; i++){%>
+                            <tr>
+                                <td><input data-index="<%= i %>" value="<%= detectedFoods[i] %>" class="food"
+                                        name="food">
+                                </td>
+                                <td><input data-index="<%= i %>" value="<%= formattedDate %>" name="purchaseDate"></td>
+                                <td><input data-index="<%= i %>" value="1" class="food" name="quantity">
+                                </td>
+                                <td><input data-index="<%= i %>" value="<%= formattedExpirationDate %>" class="food"
+                                        name="expirationDate">
+                                </td>
+                                <td><button>delete item</button></td>
+                            </tr>
+                            <% } %>
+                                </table>
+                                <button type="submit">Save items to pantry.</button>
+        </form>
+        <% } %>
+    </div>
+
+    <script src="js/groceries.js"></script>
+</body>
+
+</html>
