@@ -139,11 +139,11 @@ module.exports = function (app, passport, db, multer, ObjectID) {
       .then(res => res.json())
       .then(jsonResponse => {
         // Do something with the response
+        console.log(jsonResponse)
         const produce = jsonResponse.objects.map((obj) => obj.object)
         // const filtered = produce.filter((obj) => obj !== 'Food' && obj !== 'Fruit'))
         // const detectedFoods = [...new Set(produce.filter((obj) => obj !== 'Food' && obj !== 'Fruit' && obj !== 'Vegetable'))]
         const detectedFoods = [...new Set(produce)]
-
 
         // FoodModel.create({ user: req.user.local.email, quantity: 0, detectedFoods, image: `../public/uploads/${req.file.originalname}` }, (err, result) => {
         //   if (err) return console.log(err)
@@ -152,8 +152,7 @@ module.exports = function (app, passport, db, multer, ObjectID) {
         // })
         console.log(imagePath)
         console.log('detected foods:', detectedFoods)
-        const errorMsg = detectedFoods.length === 0 ? 'No foods detected.' : null
-        res.render('groceryHaul.ejs', { user: req.user, detectedFoods: detectedFoods, fileName: req.file.filename, errorMsg })
+        res.render('groceryHaul.ejs', { user: req.user, detectedFoods: detectedFoods, fileName: req.file.filename, jsonResponse: jsonResponse })
       })
       .catch(error => console.error(error));
   })

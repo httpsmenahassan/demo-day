@@ -12,10 +12,11 @@
 <body>
     <div>
         <img class="uploadedGroceryHaulImage" src="uploads/<%= fileName %>">
+
         <h2>AI-Detected Foods:</h2>
-        <% if (errorMsg) { %>
+        <% if (detectedFoods.length === 0) { %>
             <span>
-                <%= errorMsg %>
+                No foods detected.
                 <a href="/profile">Try again!</a>
             </span>
             <% } else { %>
@@ -61,7 +62,12 @@
         <% } %>
     </div>
 
+
+    <script text="text/javascript">
+        const jsonResponse = <%- JSON.stringify(jsonResponse.objects) %>
+    </script>
     <script src="js/groceries.js"></script>
+    
 </body>
 
 </html>

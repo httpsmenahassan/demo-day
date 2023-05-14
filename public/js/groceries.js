@@ -97,7 +97,7 @@ addItemBtn.addEventListener('click', () => {
   expirationDate.setTime(expirationDate.getTime() + 1000 * 60 * 60 * 24 * 4);
   const formattedExpirationDate = expirationDate.toLocaleDateString('en-US', {
     month: '2-digit',
-    day: '2-digit', 
+    day: '2-digit',
     year: 'numeric'
   });
   const formattedDate = today.toLocaleDateString('en-US', {
@@ -110,9 +110,9 @@ addItemBtn.addEventListener('click', () => {
     input.name = names[i];
     if (i === 1) {
       // prefill second input with today's date
-      
+
       input.value = formattedDate;
-    }  else if (i === 2) {
+    } else if (i === 2) {
       // prefill third input with a quantity number of 1
       input.value = 1;
     } else if (i === 3) {
@@ -132,3 +132,46 @@ addItemBtn.addEventListener('click', () => {
   newRow.appendChild(deleteTd);
   tBody.appendChild(newRow);
 });
+
+const groceryImg = document.querySelector('.uploadedGroceryHaulImage')
+
+window.addEventListener('load', () => {
+  // Create a canvas element and set its width and height to match the image
+  const canvas = document.createElement('canvas');
+
+  // Replace the <img> tag with the canvas element -- takes image,processes it into canvas, when done deletes image and places canvas in its place
+  groceryImg.parentNode.replaceChild(canvas, groceryImg);
+
+
+  // Draw the image on the canvas
+  const ctx = canvas.getContext('2d');
+
+  let htw = groceryImg.height / groceryImg.width
+  canvas.height = 800 * htw
+  canvas.width = 800
+
+  //shrinking img down to canvas size
+  ctx.drawImage(groceryImg, 0, 0, canvas.width, canvas.height);
+
+  let hth = canvas.height / groceryImg.height
+
+  // Set the stroke style and line width
+  ctx.strokeStyle = 'red';
+  ctx.lineWidth = 2;
+  // Loop through the objects in the JSON and draw the rectangles and labels on the canvas
+
+  for (const obj of jsonResponse) {
+    console.log(obj);
+    // Draw the rectangle on each item recognized by Azure
+    const rect = obj.rectangle;
+    console.log(rect)
+    ctx.strokeRect(rect.x * hth, rect.y * hth, rect.w * hth, rect.h * hth)
+
+    // Draw the label
+    const label = obj.object;
+    ctx.fillStyle = 'red';
+    ctx.font = 'bold 18px sans-serif';
+    ctx.fillText(label, rect.x * hth, rect.y * hth - 5);
+  }
+
+})
