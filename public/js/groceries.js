@@ -135,16 +135,15 @@ addItemBtn.addEventListener('click', () => {
 
 const groceryImg = document.querySelector('.uploadedGroceryHaulImage')
 
-window.addEventListener('load', () => {
-  // Create a canvas element and set its width and height to match the image
-  const canvas = document.createElement('canvas');
+const canvas = document.createElement('canvas');
+// Replace the <img> tag with the canvas element -- takes image,processes it into canvas, when done deletes image and places canvas in its place
 
-  // Replace the <img> tag with the canvas element -- takes image,processes it into canvas, when done deletes image and places canvas in its place
-  groceryImg.parentNode.replaceChild(canvas, groceryImg);
+document.querySelector('.container').replaceChild(canvas, groceryImg);
 
-
+function drawCanvas(foodToHighlight) {
   // Draw the image on the canvas
   const ctx = canvas.getContext('2d');
+  // Create a canvas element and set its width and height to match the image
 
   let htw = groceryImg.height / groceryImg.width
   canvas.height = 800 * htw
@@ -161,10 +160,14 @@ window.addEventListener('load', () => {
   // Loop through the objects in the JSON and draw the rectangles and labels on the canvas
 
   for (const obj of jsonResponse) {
-    console.log(obj);
+    // if a specific foodToHighlight wasn't provided, we WILL draw ALL foods on the canvas 
+    // if detected food doesn't match foodToHighlight don't draw on canvas
+    if (foodToHighlight && foodToHighlight != obj.object) {
+      // go to next item in the loop aka DON'T DRAW
+      continue
+    }
     // Draw the rectangle on each item recognized by Azure
     const rect = obj.rectangle;
-    console.log(rect)
     ctx.strokeRect(rect.x * hth, rect.y * hth, rect.w * hth, rect.h * hth)
 
     // Draw the label
@@ -173,5 +176,15 @@ window.addEventListener('load', () => {
     ctx.font = 'bold 18px sans-serif';
     ctx.fillText(label, rect.x * hth, rect.y * hth - 5);
   }
+}
 
+
+window.addEventListener('load', () => {
+  drawCanvas()
+})
+
+document.querySelector('#groceryTable').addEventListener('mouseover', (event) => {
+  const row = event.target.closest('tr')
+  // if row exists and has a querySelector then use the querySelector, otherwise returns 
+  drawCanvas(row?.querySelector('#food')?.value)
 })

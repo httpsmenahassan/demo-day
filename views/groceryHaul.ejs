@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div>
+    <div class="container">
         <img class="uploadedGroceryHaulImage" src="uploads/<%= fileName %>">
 
         <h2>AI-Detected Foods:</h2>
@@ -38,14 +38,18 @@
                         const formattedExpirationDate=expirationDate.toLocaleDateString('en-US', { month: '2-digit' ,
                         day: '2-digit' , year: 'numeric' });
                         const formattedDate=today.toLocaleDateString('en-US', {
-                        month: '2-digit' , day: '2-digit' , year: 'numeric' }); %>
+                        month: '2-digit' , day: '2-digit' , year: 'numeric' });
+                        %>
                         <% for(let i=0; i < detectedFoods.length; i++){%>
                             <tr>
-                                <td><input data-index="<%= i %>" value="<%= detectedFoods[i] %>" class="food"
+                                
+                                <% let count = Array.from(jsonResponse.objects).filter(f => f.object ==  detectedFoods[i]).length %>
+
+                                <td><input id="food" data-index="<%= i %>" value="<%= detectedFoods[i] %>" class="food"
                                         name="food">
                                 </td>
                                 <td><input data-index="<%= i %>" value="<%= formattedDate %>" name="purchaseDate"></td>
-                                <td><input data-index="<%= i %>" value="1" class="food" name="quantity">
+                                <td><input data-index="<%= i %>" value="<%= count %>" class="food" name="quantity">
                                 </td>
                                 <td><input data-index="<%= i %>" value="<%= formattedExpirationDate %>" class="food"
                                         name="expirationDate">
