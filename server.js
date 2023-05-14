@@ -2,9 +2,11 @@
 
 // set up ======================================================================
 // get all the tools we need
+require("dotenv").config();
+
 const express  = require('express');
 const app      = express();
-const port     = process.env.PORT || 8080;
+const port     = process.env.PORT;
 const MongoClient = require('mongodb').MongoClient
 const mongoose = require('mongoose');
 const passport = require('passport');
@@ -17,12 +19,10 @@ const session      = require('express-session');
 
 const configDB = require('./config/database.js');
 const multer  = require('multer');
+const AccessToken = require('twilio/lib/jwt/AccessToken.js');
 const ObjectID = require('mongodb').ObjectID
 
 let db
-
-//Use .env file in config folder
-require("dotenv").config({ path: "./config/.env" });
 
 // configuration ===============================================================
 mongoose.connect(configDB.url, (err, database) => {

@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 // define the schema for our food model
 const fridgeSchema = mongoose.Schema({
     user: ObjectID,
+    username: String,
+    phoneNumber: Number,
     foods: [{
         quantity: Number,
         name: String,

@@ -1,50 +1,16 @@
 const FoodModel = require('./models/food.js');
 const FridgeModel = require('./models/fridge.js');
+const {sendText} = require('./services/twilio.js');
 
 
 const path = require('path');
 const fetch = require('node-fetch');
 const fs = require('fs');
-
-
-// // Set storage engine
-// const storage = multer.diskStorage({
-//   destination: './public/uploads/',
-//   filename: function(req, file, cb) {
-//     cb(null, req.body.imageName + '-' + Date.now() + path.extname(file.originalname));
-//   }
-// });
-
-// // Init upload
-// const upload = multer({
-//   storage: storage,
-//   limits: { fileSize: 1000000 }, // 1MB
-//   fileFilter: function(req, file, cb) {
-//     checkFileType(file, cb);
-//   }
-// })//.single('myImage');
-
-// // Check file type
-// function checkFileType(file, cb) {
-//   // Allowed extensions
-//   const filetypes = /jpeg|jpg|png|gif/;
-
-//   // Check extension
-//   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-
-//   // Check mime type
-//   const mimetype = filetypes.test(file.mimetype);
-
-//   if (mimetype && extname) {
-//     return cb(null, true);
-//   } else {
-//     cb('Error: Images Only!');
-//   }
-// }
+const exp = require('constants');
 
 
 module.exports = function (app, passport, db, multer, ObjectID) {
-
+  
   // Create (post) - upload a photo -- which will result in a food in the collection, when we upload a photo a food is created
   // Create (post) - add items to pantry
   // API - get one recipe idea via chatGPT, 
@@ -71,10 +37,40 @@ module.exports = function (app, passport, db, multer, ObjectID) {
 
   // normal routes ===============================================================
 
-  // show the home page (will also have our login links)
+  // // show the home page (will also have our login links)
+  // app.get('/', function (req, res) {
+  //   res.render('index.ejs');
+  //   // res.sendFile(__dirname + '/../views/index.html')
+  // });
+
   app.get('/', function (req, res) {
-    res.render('index.ejs');
-    // res.sendFile(__dirname + '/../views/index.html')
+    db.collection('fridges').find().toArray((err, fridges) => {
+      if (err) return console.log(err)
+      // for (let i = 0; i < fridges.length; i++) {
+      //   console.log(fridges[i])
+      // }
+      fridges.forEach(fridge => {
+        const { foods, username, phoneNumber } = fridge
+        foods.forEach(food => {
+          const { expirationDate, name } = food
+          const today = new Date()
+          const warningDate = new Date()
+          // setting warningDate to two days before expirationDate
+          warningDate.setDate(expirationDate.getDate() - 2)
+          // simple comparison -- if today is the same day as warningDate then this will be true -- otherwise, it's false
+          const isTwoDaysBefore = warningDate.getDate() == today.getDate()
+          if (isTwoDaysBefore) {
+            sendText({
+              name: username,
+              phoneNumber,
+              food: name,              
+            })
+          }
+        })
+      })
+
+      res.render('index.ejs')
+    })
   });
 
   app.get('/groceryHaul', isLoggedIn, function (req, res) {
@@ -129,6 +125,7 @@ module.exports = function (app, passport, db, multer, ObjectID) {
     const url = "https://eastus.api.cognitive.microsoft.com/vision/v3.2/detect?model-version=latest";
     const headers = {
       "Content-Type": "image/jpeg",
+      "Ocp-Apim-Subscription-Key": process.env.OCP_APIM_SUBSCRIPTION_KEY
     };
 
     // Set the request options
@@ -165,6 +162,8 @@ module.exports = function (app, passport, db, multer, ObjectID) {
     const newFridge = new FridgeModel()
     newFridge.imageFile = req.body.fileName
     newFridge.user = req.user._id
+    newFridge.username = req.user.local.username
+    newFridge.phoneNumber = req.user.local.phoneNumber
     req.body.food.forEach((f, i) => {
       const newFood = {
         quantity: req.body.quantity[i],
