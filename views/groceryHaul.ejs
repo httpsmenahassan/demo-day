@@ -21,7 +21,7 @@
             <% } else { %>
         <form action="/groceryHaul" method="POST">
             <input type="hidden" name="fileName" value="<%= fileName %>">
-                    <table>
+                    <table id="groceryTable">
                     <tr>
                         <th>Food</th>
                         <th>Today's Date</th>
@@ -29,6 +29,7 @@
                         <th>Expiration Date</th>
                         <th>Delete Item</th>
                     </tr>
+                    <tbody id="tBody">
                     <% const today=new Date();
                 
                     const expirationDate=new Date();
@@ -48,12 +49,15 @@
                                 <td><input data-index="<%= i %>" value="<%= formattedExpirationDate %>" class="food"
                                         name="expirationDate">
                                 </td>
-                                <td><button>delete item</button></td>
+                                <td><button class="tableRowDelete">Delete item</button></td>
                             </tr>
+
                             <% } %>
+                        </tbody>
                                 </table>
                                 <button type="submit">Save items to pantry.</button>
         </form>
+        <button id="addItemBtn">Add items</button>
         <% } %>
     </div>
 
