@@ -7,6 +7,7 @@ const path = require('path');
 const fetch = require('node-fetch');
 const fs = require('fs');
 const exp = require('constants');
+const { ObjectId } = require('mongodb');
 
 
 module.exports = function (app, passport, db, multer, ObjectID) {
@@ -96,6 +97,16 @@ module.exports = function (app, passport, db, multer, ObjectID) {
     })
   });
 
+  app.get('/allFoods', isLoggedIn, function (req, res) {
+    db.collection('foods').find({user: ObjectId(req.user._id)}).toArray((err, foods) => {
+      if (err) return console.log(err)
+      res.render('allFoods.ejs', {
+        user: req.user,
+        foods
+      })
+    })
+  });
+
   // LOGOUT ==============================
   app.get('/logout', function (req, res) {
     req.logout(() => {
@@ -157,28 +168,57 @@ module.exports = function (app, passport, db, multer, ObjectID) {
       .catch(error => console.error(error));
   })
 
-  app.post('/groceryHaul', async (req, res) => {
-    const newFridge = new FridgeModel()
-    newFridge.imageFile = req.body.fileName
-    newFridge.user = req.user._id
-    newFridge.username = req.user.local.username
-    newFridge.phoneNumber = req.user.local.phoneNumber
-    req.body.food.forEach((f, i) => {
-      const newFood = {
-        quantity: req.body.quantity[i],
-        name: req.body.food[i],
-        purchaseDate: req.body.purchaseDate[i],
-        expirationDate: req.body.expirationDate[i],
-      }
-      newFridge.foods.push(newFood)
-    })
-    newFridge.save()
-    res.redirect('/profile')
+  // app.post('/groceryHaul', async (req, res) => {
+  //   console.log(req.body)
+  //   const newFridge = new FridgeModel()
+  //   newFridge.imageFile = req.body.fileName
+  //   newFridge.user = req.user._id
+  //   newFridge.username = req.user.local.username
+  //   newFridge.phoneNumber = req.user.local.phoneNumber
+  //   req.body.food.forEach((f, i) => {
+  //     const newFood = {
+  //       quantity: req.body.quantity[i],
+  //       name: req.body.food[i],
+  //       purchaseDate: req.body.purchaseDate[i],
+  //       expirationDate: req.body.expirationDate[i],
+  //     }
+  //     newFridge.foods.push(newFood)
+  //   })
+  //   newFridge.save()
+  //   res.redirect('/profile')
 
-    })
+  //   });
 
 
-  app.put('/food', async (req, res) => {
+
+  const puppeteer = require('puppeteer');
+
+app.post('/groceryHaul', async (req, res) => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  // Adjust the viewport size if needed
+  await page.setViewport({ width: 1920, height: 1080 });
+
+  // Navigate to your HTML page
+  await page.goto('http://localhost:8080/groceryHaul');
+
+  // Wait for any necessary page loading or rendering
+  await page.waitForTimeout(2000);
+
+  // Capture a screenshot of the page
+  const screenshot = await page.screenshot();
+
+  const newFridge = new FridgeModel();
+  newFridge.imageFile = screenshot;
+  // Process the rest of the form data and save it to the database
+
+  newFridge.save();
+  res.redirect('/profile');
+});
+
+  
+    app.put('/food', async (req, res) => {
     const food = await FoodModel.findById(ObjectID(req.body.foodId))
     food.quantity += req.body.upArrow ? 1 : -1
     food.save()

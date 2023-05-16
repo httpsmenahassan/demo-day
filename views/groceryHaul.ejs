@@ -20,7 +20,7 @@
                 <a href="/profile">Try again!</a>
             </span>
             <% } else { %>
-        <form action="/groceryHaul" method="POST">
+        <form action="/groceryHaul" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="fileName" value="<%= fileName %>">
                     <table id="groceryTable">
                     <tr>
@@ -70,6 +70,7 @@
     <script text="text/javascript">
         const jsonResponse = <%- JSON.stringify(jsonResponse.objects) %>
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
     <script src="js/groceries.js"></script>
     
 </body>

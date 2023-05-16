@@ -181,6 +181,7 @@ function drawCanvas(foodToHighlight) {
 
 window.addEventListener('load', () => {
   drawCanvas()
+  captureScreenshot()
 })
 
 document.querySelector('#groceryTable').addEventListener('mouseover', (event) => {
@@ -188,3 +189,23 @@ document.querySelector('#groceryTable').addEventListener('mouseover', (event) =>
   // if row exists and has a querySelector then use the querySelector, otherwise returns 
   drawCanvas(row?.querySelector('#food')?.value)
 })
+
+
+
+document.getElementById('groceryForm').addEventListener('submit', function (event) {
+  event.preventDefault(); // Prevent the default form submission
+
+  html2canvas(canvas).then(function (c) {
+    c.toBlob(function (blob) {
+      const fileReader = new FileReader();
+      fileReader.onloadend = function () {
+        const fileBuffer = new Uint8Array(this.result);
+        document.getElementById('screenshotBuffer').value = Array.from(fileBuffer).join(',');
+
+        // Submit the form
+        event.target.submit();
+      };
+      fileReader.readAsArrayBuffer(blob);
+    });
+  });
+});
