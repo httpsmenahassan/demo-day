@@ -12,7 +12,6 @@
 <body>
     <div class="container">
         <img class="uploadedGroceryHaulImage" src="uploads/<%= fileName %>">
-
         <h2>AI-Detected Foods:</h2>
         <% if (detectedFoods.length === 0) { %>
             <span>
@@ -22,6 +21,8 @@
             <% } else { %>
         <form action="/groceryHaul" method="POST">
             <input type="hidden" name="fileName" value="<%= fileName %>">
+            <input id="detectedFoodsWithBoxes" type="hidden" name="detectedFoodsWithBoxes" value="">
+
                     <table id="groceryTable">
                     <tr>
                         <th>Food</th>
@@ -71,6 +72,7 @@
         const jsonResponse = <%- JSON.stringify(jsonResponse.objects) %>
     </script>
     <script src="js/groceries.js"></script>
+    <script src="js/manualGrocery.js"></script>
     
 </body>
 

@@ -13,6 +13,7 @@ const fridgeSchema = mongoose.Schema({
         purchaseDate: Date,
         expirationDate: Date
     }],
+    detectedFoodsWithBoxes: String,
     imageFile: String
 });
 

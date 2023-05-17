@@ -85,6 +85,7 @@ module.exports = function (app, passport, db, multer, ObjectID) {
     })
   });
 
+
   // PROFILE SECTION =========================
   app.get('/profile', isLoggedIn, function (req, res) {
     db.collection('foods').find().toArray((err, result) => {
@@ -92,6 +93,17 @@ module.exports = function (app, passport, db, multer, ObjectID) {
       res.render('profile.ejs', {
         user: req.user,
         foods: result
+      })
+    })
+  });
+
+  
+  app.get('/allFoods', isLoggedIn, function (req, res) {
+    db.collection('fridges').find({user: ObjectID(req.user._id)}).toArray((err, fridge) => {
+      if (err) return console.log(err)
+      res.render('allFoods.ejs', {
+        user: req.user,
+        fridge
       })
     })
   });
@@ -114,6 +126,10 @@ module.exports = function (app, passport, db, multer, ObjectID) {
   // await awesome_instance.save();
 
   // await SomeModel.create({ name: "also_awesome" });
+
+  app.get('/manualFood', (req, res) => {
+    res.render('manualGroceryHaul.ejs', {user: req.user})
+  })
 
   app.post('/food', upload.single('groceries'), (req, res) => {
     // Read the image file as a buffer
@@ -158,11 +174,16 @@ module.exports = function (app, passport, db, multer, ObjectID) {
   })
 
   app.post('/groceryHaul', async (req, res) => {
+    console.log(req.body)
     const newFridge = new FridgeModel()
     newFridge.imageFile = req.body.fileName
+    newFridge.detectedFoodsWithBoxes = req.body.detectedFoodsWithBoxes
     newFridge.user = req.user._id
     newFridge.username = req.user.local.username
     newFridge.phoneNumber = req.user.local.phoneNumber
+    if (!Array.isArray(req.body.food)) {
+      req.body.food = [req.body.food]; // Convert single input to an array
+    }
     req.body.food.forEach((f, i) => {
       const newFood = {
         quantity: req.body.quantity[i],

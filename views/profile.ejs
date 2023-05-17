@@ -57,10 +57,10 @@
                         <% } %>
                 </ul>
 
-                <h2>Add a food</h2>
+                <h2>Submit a photo of your food and have Microsoft Azure do the work of marking down the items for you!</h2>
                 <% if (user.local.email) { %>
                     <form action="/food" method="POST" enctype="multipart/form-data">
-                        <input class="manualFoodAdd" type="text" placeholder="add items to your pantry" name="name">
+                        <!-- <input class="manualFoodAdd" type="text" placeholder="add items to your pantry" name="name"> -->
                         <input type="file" class="imgInput" name="groceries">
                         <button class="foodAddSubmit" type="submit">Submit</button>
                     </form>
@@ -71,7 +71,6 @@
     </div>
 
     <script src="https://kit.fontawesome.com/e9f7511864.js" crossorigin="anonymous"></script>
-    <script src="/js/groceries.js"></script>
     <!-- <script src="/js/main.js"></script> -->
     <script src="/js/main-CRUD.js"></script>
     

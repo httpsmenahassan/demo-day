@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <% for (let i = 0; i < fridge.length; i++) { 
+        const foods = fridge[i].foods %>
+        <span>---</span>
+        <img src="<%= fridge[i].detectedFoodsWithBoxes %>">
+           <% for (let f = 0; f < foods.length; f++) { %>
+                <span><%= foods[f].name %></span>
+                <% } %>
+
+        <% } %>
+
+            <script src="js/allFoods.js"></script>
+
+</body>
+
+</html>

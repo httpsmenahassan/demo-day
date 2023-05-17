@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/groceries.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        
+        <form action="/groceryHaul" method="POST">
+                    <table id="groceryTable">
+                    <tr>
+                        <th>Food</th>
+                        <th>Today's Date</th>
+                        <th>Quantity</th>
+                        <th>Expiration Date</th>
+                        <th>Delete Item</th>
+                    </tr>
+                    <tbody id="tBody">
+                    <% const today=new Date();
+                
+                    const expirationDate=new Date();
+                        expirationDate.setTime(expirationDate.getTime() + 1000 * 60 * 60 * 24 * 4);
+                        const formattedExpirationDate=expirationDate.toLocaleDateString('en-US', { month: '2-digit' ,
+                        day: '2-digit' , year: 'numeric' });
+                        const formattedDate=today.toLocaleDateString('en-US', {
+                        month: '2-digit' , day: '2-digit' , year: 'numeric' });
+                        %>
+                    
+                            
+
+                        </tbody>
+                                </table>
+                                <button type="submit">Save items to pantry.</button>
+        </form>
+        <button id="addItemBtn">Add a new item</button>
+    </div>
+
+    <script src="js/manualGrocery.js"></script>
+    
+</body>
+
+</html>
