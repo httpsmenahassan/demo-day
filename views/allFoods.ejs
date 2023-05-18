@@ -10,17 +10,24 @@
 
 <body>
 
-    <% for (let i = 0; i < fridge.length; i++) { 
-        const foods = fridge[i].foods %>
-        <span>---</span>
-        <img src="<%= fridge[i].detectedFoodsWithBoxes %>">
-           <% for (let f = 0; f < foods.length; f++) { %>
-                <span><%= foods[f].name %></span>
+    <form action="/getRecipe" method="POST">
+        <% for (let i=0; i < fridge.length; i++) { const foods=fridge[i].foods %>
+            <span>---</span>
+            <img src="<%= fridge[i].detectedFoodsWithBoxes %>">
+            <% for (let f=0; f < foods.length; f++) { %>
+                <input type="checkbox" name="ingredient" value="<%= foods[f].name %>">
+                <span>
+                    <%= foods[f].name %>
+                </span>
+                <span>Purchased on: <%= foods[f].purchaseDate.toDateString() %></span>
+
                 <% } %>
 
-        <% } %>
+                    <% } %>
+                        <button id="getRecipeBtn" type="submit">Get Recipe</button>
+    </form>
 
-            <script src="js/allFoods.js"></script>
+    <script src="js/allFoods.js"></script>
 
 </body>
 

@@ -24,11 +24,11 @@
                     <tbody id="tBody">
                     <% const today=new Date();
                 
-                    const expirationDate=new Date();
+                    const expirationDate = new Date();
                         expirationDate.setTime(expirationDate.getTime() + 1000 * 60 * 60 * 24 * 4);
                         const formattedExpirationDate=expirationDate.toLocaleDateString('en-US', { month: '2-digit' ,
                         day: '2-digit' , year: 'numeric' });
-                        const formattedDate=today.toLocaleDateString('en-US', {
+                        const formattedDate = today.toLocaleDateString('en-US', {
                         month: '2-digit' , day: '2-digit' , year: 'numeric' });
                         %>
                     

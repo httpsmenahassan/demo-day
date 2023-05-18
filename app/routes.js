@@ -131,6 +131,8 @@ module.exports = function (app, passport, db, multer, ObjectID) {
     res.render('manualGroceryHaul.ejs', {user: req.user})
   })
 
+
+
   app.post('/food', upload.single('groceries'), (req, res) => {
     // Read the image file as a buffer
     console.log(req.file)
@@ -168,13 +170,12 @@ module.exports = function (app, passport, db, multer, ObjectID) {
         // })
         console.log(imagePath)
         console.log('detected foods:', detectedFoods)
-        res.render('groceryHaul.ejs', { user: req.user, detectedFoods: detectedFoods, fileName: req.file.filename, jsonResponse: jsonResponse })
+        res.render('groceryHaul.ejs', { user: req.user, detectedFoods, fileName: req.file.filename, jsonResponse })
       })
       .catch(error => console.error(error));
   })
 
   app.post('/groceryHaul', async (req, res) => {
-    console.log(req.body)
     const newFridge = new FridgeModel()
     newFridge.imageFile = req.body.fileName
     newFridge.detectedFoodsWithBoxes = req.body.detectedFoodsWithBoxes
@@ -184,7 +185,11 @@ module.exports = function (app, passport, db, multer, ObjectID) {
     if (!Array.isArray(req.body.food)) {
       req.body.food = [req.body.food]; // Convert single input to an array
     }
+    if (!Array.isArray(req.body.purchaseDate)) {
+      req.body.purchaseDate = [req.body.purchaseDate]; // Convert single input to an array
+    }
     req.body.food.forEach((f, i) => {
+      console.log(req.body.purchaseDate[i])
       const newFood = {
         quantity: req.body.quantity[i],
         name: req.body.food[i],
@@ -196,6 +201,11 @@ module.exports = function (app, passport, db, multer, ObjectID) {
     newFridge.save()
     res.redirect('/profile')
 
+    })
+
+    app.post('/getRecipe', (req, res) => {
+      console.log(req.body.ingredient[0])
+      res.render('recipe.ejs')
     })
 
 
