@@ -1,6 +1,7 @@
 const FoodModel = require('./models/food.js');
 const FridgeModel = require('./models/fridge.js');
-const {sendText} = require('./services/twilio.js');
+const { sendText } = require('./services/twilio.js');
+const { Configuration, OpenAIApi } = require('openai')
 
 
 const path = require('path');
@@ -10,16 +11,6 @@ const exp = require('constants');
 
 
 module.exports = function (app, passport, db, multer, ObjectID) {
-  
-  // Create (post) - upload a photo -- which will result in a food in the collection, when we upload a photo a food is created
-  // Create (post) - add items to pantry
-  // API - get one recipe idea via chatGPT, 
-  // Read (GET) - what percentage of items we have for each recipe and then the user could select a recipe to focus on -- if you see you're missing something for a recipe, have a button to add it to the pantry
-  // Delete (delete) - delete food object from DB
-  // photos -- are the photos a class or an attribute of the class?
-  // class Food, class Recipe - has an array of ingredients, each ingredient is a food
-  // ***potential nice to have: input to manually log food, allow users to have multiple recipe ideas
-  // upload is primary input 
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, 'public/uploads')
@@ -63,7 +54,7 @@ module.exports = function (app, passport, db, multer, ObjectID) {
             sendText({
               name: username,
               phoneNumber,
-              food: name,              
+              food: name,
             })
           }
         })
@@ -97,9 +88,9 @@ module.exports = function (app, passport, db, multer, ObjectID) {
     })
   });
 
-  
+
   app.get('/allFoods', isLoggedIn, function (req, res) {
-    db.collection('fridges').find({user: ObjectID(req.user._id)}).toArray((err, fridge) => {
+    db.collection('fridges').find({ user: ObjectID(req.user._id) }).toArray((err, fridge) => {
       if (err) return console.log(err)
       res.render('allFoods.ejs', {
         user: req.user,
@@ -128,7 +119,7 @@ module.exports = function (app, passport, db, multer, ObjectID) {
   // await SomeModel.create({ name: "also_awesome" });
 
   app.get('/manualFood', (req, res) => {
-    res.render('manualGroceryHaul.ejs', {user: req.user})
+    res.render('manualGroceryHaul.ejs', { user: req.user })
   })
 
 
@@ -201,12 +192,27 @@ module.exports = function (app, passport, db, multer, ObjectID) {
     newFridge.save()
     res.redirect('/profile')
 
-    })
+  })
 
-    app.post('/getRecipe', (req, res) => {
-      console.log(req.body.ingredient[0])
-      res.render('recipe.ejs')
-    })
+  app.post('/getRecipe', async (req, res) => {
+    console.log(req.body.ingredient)
+
+    const configuration = new Configuration({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+    const openai = new OpenAIApi(configuration);
+    const ingredients = req.body.ingredient
+    let prompt = 'Give me a recipe using only these ingredients:'
+    ingredients.forEach(food => prompt += food + ',')
+    console.log(prompt)
+    const completion = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: prompt }],
+    });
+    const recipe = completion.data.choices[0].message.content
+    console.log(completion.data.choices[0].message);
+    res.render('recipe.ejs', {recipe})
+  })
 
 
   app.put('/food', async (req, res) => {
