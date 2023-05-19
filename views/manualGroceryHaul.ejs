@@ -5,15 +5,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/groceries.css">
-    <title>Document</title>
+    <title>Manual Food Add</title>
 </head>
 
 <body>
     <div class="container">
-        
+        <h1>Manually add foods to your fridge here.</h1>
+
         <form action="/groceryHaul" method="POST">
-                    <table id="groceryTable">
+            <table id="groceryTable" class="table">
+                <thead>
                     <tr>
                         <th>Food</th>
                         <th>Today's Date</th>
@@ -21,28 +24,28 @@
                         <th>Expiration Date</th>
                         <th>Delete Item</th>
                     </tr>
-                    <tbody id="tBody">
-                    <% const today=new Date();
-                
-                    const expirationDate = new Date();
-                        expirationDate.setTime(expirationDate.getTime() + 1000 * 60 * 60 * 24 * 4);
-                        const formattedExpirationDate=expirationDate.toLocaleDateString('en-US', { month: '2-digit' ,
-                        day: '2-digit' , year: 'numeric' });
-                        const formattedDate = today.toLocaleDateString('en-US', {
-                        month: '2-digit' , day: '2-digit' , year: 'numeric' });
-                        %>
-                    
-                            
+                </thead>
+                <tbody id="tBody">
+                    <% const today=new Date(); const expirationDate=new Date();
+                        expirationDate.setTime(expirationDate.getTime() + 1000 * 60 * 60 * 24 * 4); const
+                        formattedExpirationDate=expirationDate.toLocaleDateString('en-US', { month: '2-digit' ,
+                        day: '2-digit' , year: 'numeric' }); const formattedDate=today.toLocaleDateString('en-US', {
+                        month: '2-digit' , day: '2-digit' , year: 'numeric' }); %>
 
-                        </tbody>
-                                </table>
-                                <button type="submit">Save items to pantry.</button>
+
+
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary">Save items to pantry.</button>
         </form>
-        <button id="addItemBtn">Add a new item</button>
+        <button id="addItemBtn" class="btn btn-success">Add a new item</button>
     </div>
 
     <script src="js/manualGrocery.js"></script>
-    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>

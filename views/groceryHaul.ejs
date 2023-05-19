@@ -6,13 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/groceries.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Grocery</title>
 </head>
 
 <body>
     <div class="container">
         <img class="uploadedGroceryHaulImage" src="uploads/<%= fileName %>">
+            <figcaption>A visual of the foods detected by the AI. Hover over each table row to see just that item highlighted!</figcaption>
         <h2>AI-Detected Foods:</h2>
+                <p>Here's a list of all the items Azure Cognitive Services picked up on! If any items were missed or just mislabeled, you can edit or delete those rows. You're also welcome to add new rows.</p>
         <% if (detectedFoods.length === 0) { %>
             <span>
                 No foods detected.
@@ -61,9 +64,9 @@
                             <% } %>
                         </tbody>
                                 </table>
-                                <button type="submit">Save items to pantry.</button>
+                                <button type="submit" class="btn btn-primary">Save items to pantry.</button>
         </form>
-        <button id="addItemBtn">Add items</button>
+        <button id="addItemBtn" class="btn btn-success">Add items</button>
         <% } %>
     </div>
 

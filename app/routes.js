@@ -179,6 +179,9 @@ module.exports = function (app, passport, db, multer, ObjectID) {
     if (!Array.isArray(req.body.purchaseDate)) {
       req.body.purchaseDate = [req.body.purchaseDate]; // Convert single input to an array
     }
+    if (!Array.isArray(req.body.expirationDate)) {
+      req.body.expirationDate = [req.body.expirationDate]; // Convert single input to an array
+    }
     req.body.food.forEach((f, i) => {
       console.log(req.body.purchaseDate[i])
       const newFood = {
