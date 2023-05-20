@@ -39,14 +39,14 @@
                 <h2>Submit a photo of your food and have Microsoft Azure do the work of marking down the items for you!</h2>
                 <% if (user.local.email) { %>
                     <form action="/food" method="POST" enctype="multipart/form-data">
-                        <!-- <input class="manualFoodAdd" type="text" placeholder="add items to your pantry" name="name"> -->
                         <input type="file" class="imgInput" name="groceries">
                         <button class="foodAddSubmit" type="submit">Submit</button>
                     </form>
             </div>
         </div>
         <% } %>
-
+        <p>Or you can manually add food to your fridge <a href="/manualFood">here.</a></p>
+        <p>Want to see all the food you currently have on hand? Click <a href="/allFoods">here.</a></p>
     </div>
 
     <script src="https://kit.fontawesome.com/e9f7511864.js" crossorigin="anonymous"></script>

@@ -37,9 +37,6 @@ module.exports = function (app, passport, db, multer, ObjectID) {
   app.get('/', function (req, res) {
     db.collection('fridges').find().toArray((err, fridges) => {
       if (err) return console.log(err)
-      // for (let i = 0; i < fridges.length; i++) {
-      //   console.log(fridges[i])
-      // }
       fridges.forEach(fridge => {
         const { foods, username, phoneNumber } = fridge
         foods.forEach(food => {
@@ -77,11 +74,11 @@ module.exports = function (app, passport, db, multer, ObjectID) {
   });
 
 
-  // PROFILE SECTION =========================
-  app.get('/profile', isLoggedIn, function (req, res) {
+  // MAIN SECTION =========================
+  app.get('/main', isLoggedIn, function (req, res) {
     db.collection('foods').find().toArray((err, result) => {
       if (err) return console.log(err)
-      res.render('profile.ejs', {
+      res.render('main.ejs', {
         user: req.user,
         foods: result
       })
@@ -108,15 +105,6 @@ module.exports = function (app, passport, db, multer, ObjectID) {
   });
 
   // food log routes ===============================================================
-
-
-  // // Create an instance of model SomeModel
-  // const awesome_instance = new SomeModel({ name: "awesome" });
-
-  // // Save the new model instance asynchronously
-  // await awesome_instance.save();
-
-  // await SomeModel.create({ name: "also_awesome" });
 
   app.get('/manualFood', (req, res) => {
     res.render('manualGroceryHaul.ejs', { user: req.user })
@@ -150,14 +138,12 @@ module.exports = function (app, passport, db, multer, ObjectID) {
         // Do something with the response
         console.log(jsonResponse)
         const produce = jsonResponse.objects.map((obj) => obj.object)
-        // const filtered = produce.filter((obj) => obj !== 'Food' && obj !== 'Fruit'))
-        // const detectedFoods = [...new Set(produce.filter((obj) => obj !== 'Food' && obj !== 'Fruit' && obj !== 'Vegetable'))]
         const detectedFoods = [...new Set(produce)]
 
         // FoodModel.create({ user: req.user.local.email, quantity: 0, detectedFoods, image: `../public/uploads/${req.file.originalname}` }, (err, result) => {
         //   if (err) return console.log(err)
         //   console.log('saved to database')
-        //   res.redirect('/profile')
+        //   res.redirect('/main')
         // })
         console.log(imagePath)
         console.log('detected foods:', detectedFoods)
@@ -193,7 +179,7 @@ module.exports = function (app, passport, db, multer, ObjectID) {
       newFridge.foods.push(newFood)
     })
     newFridge.save()
-    res.redirect('/profile')
+    res.redirect('/main')
 
   })
 
@@ -255,7 +241,7 @@ module.exports = function (app, passport, db, multer, ObjectID) {
 
   // process the login form
   app.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/profile', // redirect to the secure profile section
+    successRedirect: '/main', // redirect to the secure main section
     failureRedirect: '/login', // redirect back to the signup page if there is an error
     failureFlash: true // allow flash messages
   }));
@@ -268,7 +254,7 @@ module.exports = function (app, passport, db, multer, ObjectID) {
 
   // process the signup form
   app.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/profile', // redirect to the secure profile section
+    successRedirect: '/main', // redirect to the secure main section
     failureRedirect: '/signup', // redirect back to the signup page if there is an error
     failureFlash: true // allow flash messages
   }));
@@ -286,7 +272,7 @@ module.exports = function (app, passport, db, multer, ObjectID) {
     user.local.email = undefined;
     user.local.password = undefined;
     user.save(function (err) {
-      res.redirect('/profile');
+      res.redirect('/main');
     });
   });
 
