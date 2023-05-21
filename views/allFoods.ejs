@@ -17,19 +17,19 @@
 <body>
 
     <div class="container mt-5">
-        <h1>Feast your eyes upon your food!</h1>
+        <h1>Feast your eyes (and stomach) upon your food!</h1>
         <p>View all foods that you've added here. Select foods and click the "Get Recipe" button at the bottom of the page to get a recipe featuring those ingredients courtesy of ChatGPT.</p>
 
         <form action="/getRecipe" method="POST">
 
-            <% for (let i=0; i < fridge.length; i++) { const foods=fridge[i].foods %>
+            <% for (let i = 0; i < fridge.length; i++) { const foods=fridge[i].foods %>
                 <div class="row mb-3">
                     <div class="col">
                         <img src="<%= fridge[i].detectedFoodsWithBoxes %>" class="img-fluid">
                     </div>
                 </div>
 
-                <% for (let f=0; f < foods.length; f++) { %>
+                <% for (let f = 0; f < foods.length; f++) { %>
                     <div class="row mb-3">
                         <div class="col-auto">
                             <input type="checkbox" name="ingredient" value="<%= foods[f].name %>">
@@ -53,7 +53,10 @@
 
         </form>
         <h2></h2>
-        <p>Looking to add more foods? Click <a href="/main">here</a> to submit an image. Or click <a href="/manualFood">here</a> to manually log other foods.</p>
+        <p>Looking to add more foods instead?</p>
+        <button class="btn btn-secondary"><a href="/main">Add Image</a></button>
+        <button class="btn btn-secondary"><a href="/manualFood">Manual Add</a></button>
+
     </div>
 
     <!-- Add Bootstrap JS -->

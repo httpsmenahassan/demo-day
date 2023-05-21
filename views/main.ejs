@@ -5,6 +5,7 @@
     <title>Produce Savior</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
@@ -18,24 +19,6 @@
 
         <div class="row">
             <div class="col-sm-6">
-                <ul class="foods">
-                    <% for(let i = 0; i <foods.length; i++) {%>
-                        <li data-nameId="<%= foods[i]._id %>" class="foods">
-                            <span>
-                                <%= foods[i].name %>
-                            </span>
-                            <span>
-                                <%= foods[i].quantity %>
-                            </span>
-                            <span><i class="fa-solid fa-trash"
-                                    aria-hidden="true"></i></span>
-                            <span><i class="fa-solid fa-arrow-up-long"></i></span>
-                            <span><i class="fa-solid fa-arrow-down"></i></span>
-
-                        </li>
-                        <% } %>
-                </ul>
-
                 <h2>Submit a photo of your food and have Microsoft Azure do the work of marking down the items for you!</h2>
                 <% if (user.local.email) { %>
                     <form action="/food" method="POST" enctype="multipart/form-data">
@@ -45,11 +28,14 @@
             </div>
         </div>
         <% } %>
-        <p>Or you can manually add food to your fridge <a href="/manualFood">here.</a></p>
-        <p>Want to see all the food you currently have on hand? Click <a href="/allFoods">here.</a></p>
+
+        <button class="btn btn-secondary"><a href="/manualFood">Manual Add</a></button>
+        <button class="btn btn-secondary"><a href="/allFoods">See all your foods</a></button>
     </div>
 
     <script src="https://kit.fontawesome.com/e9f7511864.js" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <!-- <script src="/js/main.js"></script> -->
     <script src="/js/main-CRUD.js"></script>
     

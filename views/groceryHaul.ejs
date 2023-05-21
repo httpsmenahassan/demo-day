@@ -15,7 +15,7 @@
         <img class="uploadedGroceryHaulImage" src="uploads/<%= fileName %>">
             <figcaption>A visual of the foods detected by the AI. Hover over each table row to see just that item highlighted!</figcaption>
         <h2>AI-Detected Foods:</h2>
-                <p>Here's a list of all the items Azure Cognitive Services picked up on! If any items were missed or just mislabeled, you can edit or delete those rows. You're also welcome to add new rows.</p>
+                <p>Here's a list of all the items Azure Cognitive Services picked up on! If any items were missed or just mislabeled, you can edit or delete those rows. You're also welcome to add new rows. You'll get a text two days before your food is set to expire.</p>
         <% if (detectedFoods.length === 0) { %>
             <span>
                 No foods detected.
@@ -24,6 +24,7 @@
             <% } else { %>
         <form action="/groceryHaul" method="POST">
             <input type="hidden" name="fileName" value="<%= fileName %>">
+            <!-- this is the hidden input that allows us to grab the canvas image and send it to the server -->
             <input id="detectedFoodsWithBoxes" type="hidden" name="detectedFoodsWithBoxes" value="">
 
                     <table id="groceryTable">

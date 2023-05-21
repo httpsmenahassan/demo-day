@@ -1,14 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
     <title>Chat GPT Recipe</title>
 </head>
+
 <body>
-    <h1>LET 'EM COOK</h1>
-    <p>Here's a recipe suggestion based on the ingredients you selected. Please note that the AI takes some creative liberties and may include a few extra ingredients if what you have on hand isn't enough.</p>
-    <pre><%= recipe %></pre>
+    <nav class="navbar navbar-expand-lg navbar-light py-3 fixed-top" style="background-color: #F4F3E7;">
+        <div class="container">
+            <a href="#" class="navbar-brand">Produce Savior</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="/allFoods" class="nav-link">All Foods</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/main" class="nav-link">Upload Image</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/manualFood" class="nav-link">Manual Add</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="text-light p-5 text-left mt-5" style="background-color: #00473B;">
+        <div class="container">
+            <h1>LET 'EM COOK</h1>
+                <p>Here's a recipe suggestion based on the ingredients you selected. Please note that the AI takes some creative
+                    liberties and may include a few extra ingredients if what you have on hand isn't enough.</p>
+            <div class="d-flex">
+                <pre><%= recipe %></pre>
+            </div>
+        </div>
+    </section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
