@@ -46,7 +46,9 @@ module.exports = function (app, passport, db, multer, ObjectID) {
           // setting warningDate to two days before expirationDate
           warningDate.setDate(expirationDate.getDate() - 2)
           // simple comparison -- if today is the same day as warningDate then this will be true -- otherwise, it's false
+          // might be good to edit this down the line to make sure both the month and day match
           const isTwoDaysBefore = warningDate.getDate() == today.getDate()
+          // this needs to be in a scheduler (a dedicated file that would be scheduled to run once a day and check expiration dates)
           if (isTwoDaysBefore) {
             sendText({
               name: username,
