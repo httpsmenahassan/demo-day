@@ -44,7 +44,7 @@ const groceryImg = document.querySelector('.uploadedGroceryHaulImage')
 const canvas = document.createElement('canvas');
 // Replace the <img> tag with the canvas element -- takes image,processes it into canvas, when done deletes image and places canvas in its place
 
-document.querySelector('.container').replaceChild(canvas, groceryImg);
+document.querySelector('#container').replaceChild(canvas, groceryImg);
 
 function drawCanvas(foodToHighlight) {
   // Draw the image on the canvas
