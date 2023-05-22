@@ -37,6 +37,12 @@
         <div class="container">
             <h2>Submit a photo of your food and have Microsoft Azure do the work of marking down the items for
                 you!</h2>
+                <h3>Some images are better than others. Follow these tips to get the best results:</h3>
+                <ol>
+                    <li>Remove all food from its packaging.</li>
+                    <li>Don't overcrowd images! Try to space items out.</li>
+                    <li>Submit photos that are well-lit. If there are shadows cast in your photo, the AI may not be able to detect the food.</li>
+                </ol>
             <% if (user.local.email) { %>
                 <form action="/food" method="POST" enctype="multipart/form-data">
                     <input type="file" class="imgInput" name="groceries">
