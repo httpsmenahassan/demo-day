@@ -1,0 +1,36 @@
+h1.title {
+    font-size: 140px;
+    color: #00473B;
+}
+
+.subtitle {
+    font-size: 60px;
+}
+
+.hero {
+    background: url('../anh-nguyen-kcA-c3f_3FE-unsplash.jpg') no-repeat center center fixed;
+    background-size: cover;
+    width: 100%;
+    height: 800px;
+}
+
+/* .overlay {
+    background: rgba(244,243,231, 0.4);
+    overflow: hidden;
+    height: 100%;
+    z-index: 2;
+} */
+
+/* #header {
+    background: url(../img/bg.jpg) 0 0 no-repeat fixed;
+    height: 100%;
+    overflow: hidden;
+    color: #FFFFFF
+ }
+
+.row{
+    background: rgba(39,62,84,0.82);
+    overflow: hidden;
+    height: 100%;
+    z-index: 2;
+} */
