@@ -5,6 +5,7 @@
     <title>Produce Savior</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style-main.css">
 </head>
 
 <body>
@@ -33,18 +34,24 @@
     </nav>
 
 
-    <section class="text-light p-5 text-left mt-5 pt-5" style="background-color: #00473B;">
-        <div class="container">
-            <h2>Submit a photo of your food and have Microsoft Azure do the work of marking down the items for
-                you!</h2>
-                <h3>Some images are better than others. Follow these tips to get the best results:</h3>
-                <ol>
-                    <li>Remove all food from its packaging.</li>
-                    <li>Don't overcrowd images! Try to space items out.</li>
-                    <li>Submit photos that are well-lit. If there are shadows cast in your photo, the AI may not be able to detect the food.</li>
-                </ol>
+    <section class="overlay hero text-light mt-5 p-5 text-center pt-5">
+        <h1 class="title">PRODUCE SAVIOR</h1>
+    </section>
+
+    <section class="p-5 text-left pt-5" style="background-color: #F4F3E7;">
+        <div class="text-center container">
+            <h2 class="text-center mb-4 subtitle">Save Your Food</h2>
+            <p class="text-center">Submit a photo of your food and have Microsoft Azure do the work of marking down the items for
+                you!</p>
+            <p class="text-center">Some images are better than others. Follow these tips to get the best results:</p>
+            <ul>
+                <li>1. Remove all food from its packaging.</li>
+                <li>2. Don't overcrowd images! Try to space items out.</li>
+                <li>3. Submit photos that are well-lit. If there are shadows cast in your photo, the AI may not be able to
+                    detect the food.</li>
+            </ul>
             <% if (user.local.email) { %>
-                <form action="/food" method="POST" enctype="multipart/form-data">
+                <form class="text-center" action="/food" method="POST" enctype="multipart/form-data">
                     <input type="file" class="imgInput" name="groceries">
                     <button class="foodAddSubmit btn btn-light" type="submit">Submit</button>
                 </form>
