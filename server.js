@@ -1,4 +1,5 @@
 // server.js
+const version = '1.0'
 
 // set up ======================================================================
 // get all the tools we need
@@ -7,7 +8,6 @@ require("dotenv").config();
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-
 app.use(bodyParser.json({ limit: '10mb' })); // get information from html forms
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
 const port = process.env.PORT;
