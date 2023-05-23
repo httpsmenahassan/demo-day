@@ -108,7 +108,7 @@ module.exports = function (app, passport, db, multer, ObjectID) {
 
 
 
-  app.post('/food', upload.single('groceries'), (req, res) => {
+  app.post('/food', isLoggedIn, upload.single('groceries'), (req, res) => {
     console.log('food !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', req.user)
 
     // Read the image file as a buffer
@@ -150,7 +150,7 @@ module.exports = function (app, passport, db, multer, ObjectID) {
       .catch(error => console.error(error));
   })
 
-  app.post('/groceryHaul', async (req, res) => {
+  app.post('/groceryHaul', isLoggedIn, async (req, res) => {
     console.log('grocery haul !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', req.user)
 
     const newFridge = new FridgeModel()
