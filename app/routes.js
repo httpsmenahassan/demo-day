@@ -151,6 +151,8 @@ module.exports = function (app, passport, db, multer, ObjectID) {
   })
 
   app.post('/groceryHaul', async (req, res) => {
+    console.log('grocery haul !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', req.user)
+
     const newFridge = new FridgeModel()
     newFridge.imageFile = req.body.fileName
     newFridge.detectedFoodsWithBoxes = req.body.detectedFoodsWithBoxes
