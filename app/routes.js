@@ -71,6 +71,7 @@ module.exports = function (app, passport, db, multer, ObjectID) {
 
   // MAIN SECTION =========================
   app.get('/main', isLoggedIn, function (req, res) {
+    console.log('MAIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', req.user)
     db.collection('foods').find().toArray((err, result) => {
       if (err) return console.log(err)
       res.render('main.ejs', {
@@ -108,6 +109,8 @@ module.exports = function (app, passport, db, multer, ObjectID) {
 
 
   app.post('/food', upload.single('groceries'), (req, res) => {
+    console.log('food !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', req.user)
+
     // Read the image file as a buffer
     console.log(req.file)
     const imageBuffer = Buffer.from(req.file.buffer);
