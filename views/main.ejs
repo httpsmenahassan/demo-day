@@ -39,17 +39,19 @@
     </section>
 
     <section class="p-5 text-left pt-5" style="background-color: #F4F3E7;">
-        <div class="text-center container">
+        <div class="container">
             <h2 class="text-center mb-4 subtitle">Save Your Food</h2>
             <p class="text-center">Submit a photo of your food and have Microsoft Azure do the work of marking down the items for
                 you!</p>
             <p class="text-center">Some images are better than others. Follow these tips to get the best results:</p>
-            <ul>
-                <li>1. Remove all food from its packaging.</li>
-                <li>2. Don't overcrowd images! Try to space items out.</li>
-                <li>3. Submit photos that are well-lit. If there are shadows cast in your photo, the AI may not be able to
-                    detect the food.</li>
-            </ul>
+            <div class="container text-center">
+                <ul class="photoGuidelines">
+                    <li>1. Remove all food from its packaging. This includes things like nets, rubber bands, and strings.</li>
+                    <li>2. Don't overcrowd images! Try to space items out.</li>
+                    <li>3. Submit photos that are well-lit. If there are shadows cast in your photo, the AI may not be able to
+                        detect the food.</li>
+                </ul>
+            </div>
             <% if (user.local.email) { %>
                 <form class="text-center" action="/food" method="POST" enctype="multipart/form-data">
                     <input type="file" class="imgInput" name="groceries">
@@ -67,7 +69,6 @@
         crossorigin="anonymous"></script>
     <!-- <script src="/js/main.js"></script> -->
     <script src="/js/main-CRUD.js"></script>
-
 
 </body>
 

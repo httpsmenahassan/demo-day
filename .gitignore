@@ -15,5 +15,5 @@ npm-debug.log
 node_modules
 
 __MACOSX
-public/uploads
+# public/uploads
 .env
