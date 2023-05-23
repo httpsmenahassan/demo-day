@@ -11,16 +11,18 @@ const exp = require('constants');
 
 
 module.exports = function (app, passport, db, multer, ObjectID) {
-  const storage = multer.diskStorage({
+  // Store the multer.diskStorage configuration in the memory
+  const storage = memoryStore.diskStorage({
     destination: function (req, file, cb) {
       cb(null, 'public/uploads')
     },
     filename: function (req, file, cb) {
       cb(null, file.originalname)
     }
-  })
+  });
 
-  const upload = multer({ storage: storage })
+  // Create an instance of multer with the memory store
+  const upload = multer({ storage: storage });
 
 
 
@@ -117,9 +119,8 @@ module.exports = function (app, passport, db, multer, ObjectID) {
   app.post('/food', upload.single('groceries'), (req, res) => {
     // Read the image file as a buffer
     console.log(req.file)
-    const imagePath = path.join(__dirname, `../public/uploads/${req.file.originalname}`);
+    const imageBuffer = Buffer.from(req.file.buffer);
 
-    const imageBuffer = fs.readFileSync(imagePath);
     // Set the Azure Cognitive Services endpoint URL and headers
     const url = "https://eastus.api.cognitive.microsoft.com/vision/v3.2/detect?model-version=latest";
     const headers = {
@@ -202,7 +203,7 @@ module.exports = function (app, passport, db, multer, ObjectID) {
     });
     const recipe = completion.data.choices[0].message.content
     console.log(completion.data.choices[0].message);
-    res.render('recipe.ejs', {recipe})
+    res.render('recipe.ejs', { recipe })
   })
 
 
