@@ -11,17 +11,8 @@ const exp = require('constants');
 
 
 module.exports = function (app, passport, db, multer, ObjectID) {
-  // Store the multer.diskStorage configuration in the memory
-  const storage = memoryStore.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'public/uploads')
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.originalname)
-    }
-  });
-
-  // Create an instance of multer with the memory store
+  // Create a Multer instance with the memory storage
+  const storage = multer.memoryStorage();
   const upload = multer({ storage: storage });
 
 
@@ -120,6 +111,8 @@ module.exports = function (app, passport, db, multer, ObjectID) {
     // Read the image file as a buffer
     console.log(req.file)
     const imageBuffer = Buffer.from(req.file.buffer);
+    const dataUrl = `data:${req.file.mimetype};base64,${imageBuffer.toString('base64')}`;
+
 
     // Set the Azure Cognitive Services endpoint URL and headers
     const url = "https://eastus.api.cognitive.microsoft.com/vision/v3.2/detect?model-version=latest";
@@ -148,9 +141,8 @@ module.exports = function (app, passport, db, multer, ObjectID) {
         //   console.log('saved to database')
         //   res.redirect('/main')
         // })
-        console.log(imagePath)
         console.log('detected foods:', detectedFoods)
-        res.render('groceryHaul.ejs', { user: req.user, detectedFoods, fileName: req.file.filename, jsonResponse })
+        res.render('groceryHaul.ejs', { user: req.user, detectedFoods, fileName: req.file.filename, jsonResponse, dataUrl })
       })
       .catch(error => console.error(error));
   })
