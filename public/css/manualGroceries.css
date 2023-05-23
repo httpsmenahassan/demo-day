@@ -1,3 +1,11 @@
+body {
+    background-color: #F4F3E7;
+}
+
+tbody tr:nth-child(2n) {
+    background-color: #D8E5D6;
+}
+
 table input {
     background: transparent;
     border: none
@@ -14,14 +22,4 @@ td {
     border: 1px black;
     border-style: double;
 
-}
-
-.uploadedGroceryHaulImage {
-    height: 300px;
-    display: block;
-    margin: auto;
-}
-
-tbody tr:nth-child(2n) {
-    background-color: #D8E5D6;
 }
