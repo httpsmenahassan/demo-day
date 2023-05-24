@@ -47,13 +47,13 @@ body {
 }
 
 a {
-  color: #FBB448;
+  color: #00473B;
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;
 }
 a:hover, a:active, a:focus {
-  color: #FBB448;
+  color: white;
   outline: none;
   text-decoration: none;
 }
@@ -69,6 +69,12 @@ h1, h2, h3, h4, h5, h6, figure {
   margin: 0 0 20px 0;
 }
 
+.main {
+  background-color: rgba(0,71,59,0.5);
+  border-radius: 20px;
+  padding: 20px;
+}
+
 ::-webkit-selection {
   color: #fff;
   background: #FBB448;
@@ -78,10 +84,10 @@ h1, h2, h3, h4, h5, h6, figure {
   color: #fff;
   background: #FBB448;
 }
-
+/* this determines what highlighted color looks like as well as the the color of the text that is being highlighted */
 ::selection {
-  color: #fff;
-  background: #FBB448;
+  color: #333;
+  background: #D8E5D6;
 }
 
 .gtco-container {
@@ -229,9 +235,10 @@ h1, h2, h3, h4, h5, h6, figure {
   -ms-border-radius: 4px;
   border-radius: 4px;
 }
+/* changes the color of the login button when hovered over */
 .gtco-nav ul li.btn-cta a:hover span {
   background: #fff;
-  color: #FBB448;
+  color: #00473B;
 }
 .gtco-nav ul li.active > a {
   color: #FBB448 !important;
@@ -595,7 +602,7 @@ h1, h2, h3, h4, h5, h6, figure {
   display: inline-block;
   zoom: 1;
   *display: inline;
-  color: #FBB448;
+  color: #00473B;
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -787,7 +794,7 @@ form label {
 }
 
 #gtco-features {
-  background: #FBB448;
+  background: #00473B;
 }
 #gtco-features .gtco-heading h2 {
   color: #fff;
