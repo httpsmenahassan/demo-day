@@ -1,0 +1,64 @@
+body {
+    background-color: rgb(223, 193, 167);
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginTextContainer {
+    width: 50%;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+h1 {
+    font-size: 56px;
+    font-weight: bold;
+    padding-bottom: 24px;
+    font-family: monospace;
+}
+
+label {
+    font-size: 28px;
+    font-weight: normal;
+    margin: 12px 0;
+}
+
+form {
+    background-color: white;
+    border-radius: 16px;
+    width: 40%;
+    padding: 80px;
+    box-shadow: -16px 16px 2px 1px rgb(37 74 51);
+}
+
+
+.form-group input {
+    /* background-color: rgb(200, 184, 153); */
+    border: 0;
+    font-size: 28px;
+    border-radius: 0;
+    border-bottom: 1px solid #333;
+    min-height: 1.8em;
+}
+
+.form-group input:focus {
+    border: 1px solid #333;
+}
+
+.btn.btn-warning.btn-lg {
+    background-color: #00473B;
+    margin: 24px 0;
+    padding: 12px 24px;
+}
+
+form p {
+    font-size: 20px;
+    padding: 4px 0;
+}
+
+form p a {
+    color: #00473B;
+}
