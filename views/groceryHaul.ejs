@@ -11,14 +11,15 @@
 </head>
 
 <body>
-    <section>
         <nav class="navbar navbar-expand-lg navbar-dark py-3 fixed-top" style="background-color: #00473B;">
             <div class="container">
                 <a href="/main" class="navbar-brand">Produce Savior</a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navmenu">
+
+                <div class="collapse navbar-collapse" id="navmenu" style="margin-left: 689px;">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a href="/allFoods" class="nav-link">All Foods</a>
@@ -33,7 +34,6 @@
                 </div>
             </div>
         </nav>
-    </section>
 
     
     <div class="text-dark p-5 text-left mt-5" style="background-color: #F4F3E7;">
@@ -88,9 +88,9 @@
                                 <% } %>
                             </tbody>
                                     </table>
-                                    <button type="submit" class="btn btn-primary">Save items to pantry.</button>
+                                    <button type="submit" class="btn" style="background-color: #00473B; color: #F4F3E7;">Save items to pantry.</button>
             </form>
-            <button id="addItemBtn" class="btn btn-success">Add items</button>
+            <button id="addItemBtn" class="btn" style="background-color: #D8E5D6; color: #333">Add items</button>
             <% } %>
         </div>
     </div>

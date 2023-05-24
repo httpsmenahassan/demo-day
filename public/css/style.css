@@ -290,8 +290,8 @@ h1, h2, h3, h4, h5, h6, figure {
   margin-bottom: 0px;
   font-size: 80px;
   line-height: 1.5;
-  font-weight: 300;
-  font-family: "Kaushan Script", cursive !important;
+  font-weight: 500;
+  /* font-family: "Kaushan Script", cursive !important; */
 }
 @media screen and (max-width: 768px) {
   #gtco-header h1 {
@@ -663,9 +663,9 @@ form label {
   font-weight: normal !important;
 }
 
-.cursive-font {
+/* .cursive-font {
   font-family: "Kaushan Script", cursive;
-}
+} */
 
 .primary-color {
   color: #FBB448 !important;
@@ -910,7 +910,7 @@ form label {
   font-size: 50px;
   margin-bottom: 10px;
   line-height: 1.5;
-  font-weight: 300;
+  font-weight: 500;
   color: #000;
   position: relative;
 }
