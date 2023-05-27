@@ -71,7 +71,6 @@ module.exports = function (app, passport, db, multer, ObjectID) {
 
   // MAIN SECTION =========================
   app.get('/main', isLoggedIn, function (req, res) {
-    console.log('MAIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', req.user)
     db.collection('foods').find().toArray((err, result) => {
       if (err) return console.log(err)
       res.render('main.ejs', {
@@ -109,10 +108,8 @@ module.exports = function (app, passport, db, multer, ObjectID) {
 
 
   app.post('/food', isLoggedIn, upload.single('groceries'), (req, res) => {
-    console.log('food !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', req.user)
 
     // Read the image file as a buffer
-    console.log(req.file)
     const imageBuffer = Buffer.from(req.file.buffer);
     const dataUrl = `data:${req.file.mimetype};base64,${imageBuffer.toString('base64')}`;
 
@@ -135,24 +132,15 @@ module.exports = function (app, passport, db, multer, ObjectID) {
       .then(res => res.json())
       .then(jsonResponse => {
         // Do something with the response
-        console.log(jsonResponse)
         const produce = jsonResponse.objects.map((obj) => obj.object)
         const detectedFoods = [...new Set(produce)]
 
-        // FoodModel.create({ user: req.user.local.email, quantity: 0, detectedFoods, image: `../public/uploads/${req.file.originalname}` }, (err, result) => {
-        //   if (err) return console.log(err)
-        //   console.log('saved to database')
-        //   res.redirect('/main')
-        // })
-        console.log('detected foods:', detectedFoods)
         res.render('groceryHaul.ejs', { user: req.user, detectedFoods, fileName: req.file.filename, jsonResponse, dataUrl })
       })
       .catch(error => console.error(error));
   })
 
   app.post('/groceryHaul', isLoggedIn, async (req, res) => {
-    console.log('grocery haul !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', req.user)
-
     const newFridge = new FridgeModel()
     newFridge.imageFile = req.body.fileName
     newFridge.detectedFoodsWithBoxes = req.body.detectedFoodsWithBoxes
@@ -184,8 +172,6 @@ module.exports = function (app, passport, db, multer, ObjectID) {
   })
 
   app.post('/getRecipe', async (req, res) => {
-    console.log(req.body.ingredient)
-
     const configuration = new Configuration({
       apiKey: process.env.OPENAI_API_KEY,
     });
@@ -199,7 +185,6 @@ module.exports = function (app, passport, db, multer, ObjectID) {
       messages: [{ role: "user", content: prompt }],
     });
     const recipe = completion.data.choices[0].message.content
-    console.log(completion.data.choices[0].message);
     res.render('recipe.ejs', { recipe })
   })
 
@@ -215,7 +200,6 @@ module.exports = function (app, passport, db, multer, ObjectID) {
     const food = await FoodModel.findById(ObjectID(req.body._id))
     console.log(req.body.newValue)
     food.detectedFoods[req.body.index] = req.body.newValue
-    // food.detectedFoods = ['one', 'two', 'three', 'four']
     food.save()
     res.send(food)
   })
