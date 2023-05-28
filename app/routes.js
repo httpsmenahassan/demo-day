@@ -15,17 +15,7 @@ module.exports = function (app, passport, db, multer, ObjectID) {
   const storage = multer.memoryStorage();
   const upload = multer({ storage: storage });
 
-
-
-
-
   // normal routes ===============================================================
-
-  // // show the home page (will also have our login links)
-  // app.get('/', function (req, res) {
-  //   res.render('index.ejs');
-  //   // res.sendFile(__dirname + '/../views/index.html')
-  // });
 
   app.get('/', function (req, res) {
     db.collection('fridges').find().toArray((err, fridges) => {
