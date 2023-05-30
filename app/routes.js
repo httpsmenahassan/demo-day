@@ -11,7 +11,6 @@ const exp = require('constants');
 
 
 module.exports = function (app, passport, db, multer, ObjectID) {
-  // Create a Multer instance with the memory storage
   const storage = multer.memoryStorage();
   const upload = multer({ storage: storage });
 
@@ -26,12 +25,8 @@ module.exports = function (app, passport, db, multer, ObjectID) {
           const { expirationDate, name } = food
           const today = new Date()
           const warningDate = new Date()
-          // setting warningDate to two days before expirationDate
           warningDate.setDate(expirationDate.getDate() - 2)
-          // simple comparison -- if today is the same day as warningDate then this will be true -- otherwise, it's false
-          // might be good to edit this down the line to make sure both the month and day match
           const isTwoDaysBefore = warningDate.getDate() == today.getDate()
-          // this needs to be in a scheduler (a dedicated file that would be scheduled to run once a day and check expiration dates)
           if (isTwoDaysBefore) {
             sendText({
               name: username,
@@ -138,13 +133,13 @@ module.exports = function (app, passport, db, multer, ObjectID) {
     newFridge.username = req.user.local.username
     newFridge.phoneNumber = req.user.local.phoneNumber
     if (!Array.isArray(req.body.food)) {
-      req.body.food = [req.body.food]; // Convert single input to an array
+      req.body.food = [req.body.food];
     }
     if (!Array.isArray(req.body.purchaseDate)) {
-      req.body.purchaseDate = [req.body.purchaseDate]; // Convert single input to an array
+      req.body.purchaseDate = [req.body.purchaseDate];
     }
     if (!Array.isArray(req.body.expirationDate)) {
-      req.body.expirationDate = [req.body.expirationDate]; // Convert single input to an array
+      req.body.expirationDate = [req.body.expirationDate];
     }
     req.body.food.forEach((f, i) => {
       console.log(req.body.purchaseDate[i])
