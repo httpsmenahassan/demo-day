@@ -1,30 +1,3 @@
-// file.addEventListener('change', (e) => {
-//     console.log(e.target.value)
-//     const isEmptyFile = e.target.value.length === 0
-
-//     if (isEmptyFile) {
-//         // console.log('it\'s not empty')
-//         isDisabled = false
-//     } else {
-//         isDisabled = true
-//     }
-//     foodAddSubmitBtn.disabled = isDisabled
-// })
-
-
-// const file = document.querySelector('.imgInput')
-// foodAddSubmitBtn.disabled = true
-
-// file.addEventListener('change', (e) => {
-//   const isEmpty = e.target.value.length == 0
-//   console.log(isEmpty)
-//   if(isEmpty){
-//     foodAddSubmitBtn.disabled = true
-//   } else {
-//     foodAddSubmitBtn.disabled = false
-//   }
-// })
-
 // delete table rows that were created as a result of Azure
 document.addEventListener("DOMContentLoaded", () => {
   const deleteButtons = document.querySelectorAll(".tableRowDelete");
