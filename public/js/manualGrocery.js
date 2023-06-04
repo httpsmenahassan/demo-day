@@ -38,6 +38,8 @@ addItemBtn.addEventListener('click', () => {
     newRow.appendChild(cell);
   }
   const deleteBtn = document.createElement('button');
+  deleteBtn.classList.add('btn')
+  deleteBtn.classList.add('btn-secondary')
   deleteBtn.textContent = 'Delete item';
   deleteBtn.addEventListener('click', () => {
     newRow.remove();
