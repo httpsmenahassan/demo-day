@@ -4,7 +4,9 @@ Upload a photo of your groceries and let AI handle the rest. Receive recipe sugg
 
 Link to project: https://producesavior.onrender.com/
 
-![See a walkthrough of this project here](produce-savior-walkthrough.gif)
+![See a walkthrough GIF of this project here](produce-savior-walkthrough.gif)
+
+Watch a live walkthrough video of this project [here](https://menahassan.wistia.com/medias/3pr8y2oqxn)
 
 # How It's Made
 Tech used: HTML, CSS, SCSS, JavaScript, Express, Node.js, Multer
